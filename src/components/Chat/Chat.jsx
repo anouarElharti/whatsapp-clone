@@ -17,6 +17,8 @@ const ChatRoom = () => {
   const handleMessage = (e) => {
     e.preventDefault();
     // FIREBASE SENDING MESSAGE
+
+    setMessage("");
   };
 
   return (
