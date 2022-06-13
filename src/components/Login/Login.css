@@ -1,0 +1,30 @@
+.login {
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: #f8f8f8;
+}
+.loginContainer {
+  display: flex;
+  width: 50vw;
+  flex-direction: column;
+  gap: 20px;
+  padding: 100px;
+  text-align: center;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+.loginContainer .logo {
+  width: 25%;
+  height: auto;
+  margin: 15px auto;
+}
+.loginContainer button {
+  width: fit-content;
+  color: white;
+  text-transform: inherit;
+  background: #0a8d48;
+}

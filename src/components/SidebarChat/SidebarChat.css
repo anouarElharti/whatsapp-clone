@@ -4,6 +4,14 @@
   cursor: pointer;
   border-bottom: 1px solid #f4f4f4;
 }
+.sidebarChat a,
+.sidebarChat a:hover,
+.sidebarChat a:visited,
+.sidebarChat a:active {
+  text-decoration: none;
+  color: #333333;
+  display: flex;
+}
 .sidebarChat:hover {
   background-color: #ebebeb;
 }

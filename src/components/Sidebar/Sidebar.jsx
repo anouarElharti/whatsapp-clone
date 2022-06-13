@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ref, get } from "firebase/database";
-import { updateDoc, doc, onSnapshot } from "firebase/firestore";
 import { app, db, database } from "../../firebase";
 import { Avatar, IconButton } from "@material-ui/core";
 import DonutLargeIcon from "@mui/icons-material/DonutLarge";
@@ -10,7 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import SidebarChat from "../SidebarChat/SidebarChat";
 import "./sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = ({ currentUser }) => {
   const [rooms, setRooms] = useState([]);
   const [dbCollection, setCollection] = useState({});
   const dbRef = ref(database);
@@ -31,11 +30,11 @@ const Sidebar = () => {
         console.error("The error is here", error);
       });
   }, []);
-  console.log("Rooms", rooms);
+
   return (
     <div className="sidebar">
       <div className="sideBarHeader">
-        <Avatar />
+        <Avatar src={currentUser.user.photoURL} />
         <div className="sideBarHeaderRight">
           <IconButton>
             <DonutLargeIcon />

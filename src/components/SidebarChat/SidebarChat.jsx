@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ref, set, get, update } from "firebase/database";
 import { db, database } from "../../firebase";
 import "./SidebarChat.css";
+import { Link } from "react-router-dom";
 
 const SidebarChat = ({ addNewChat, title, roomsNames }) => {
   const [seed, setSeed] = useState("");
@@ -25,11 +26,13 @@ const SidebarChat = ({ addNewChat, title, roomsNames }) => {
   };
   return !addNewChat ? (
     <div className="sidebarChat">
-      <Avatar src={`https://i.pravatar.cc/150?u=${seed}`} />
-      <div className="sidebarChatInfo">
-        <h4>{title}</h4>
-        <p>Last message...</p>
-      </div>
+      <Link to={`/rooms/${title}`}>
+        <Avatar src={`https://i.pravatar.cc/150?u=${seed}`} />
+        <div className="sidebarChatInfo">
+          <h4>{title}</h4>
+          <p>Last message...</p>
+        </div>
+      </Link>
     </div>
   ) : (
     <div onClick={createNewChat} className="sidebarChat">
