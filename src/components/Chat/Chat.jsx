@@ -16,28 +16,35 @@ const ChatRoom = ({ currentUser }) => {
 
   const { roomName } = useParams();
   const [activeRoom, setActiveRooms] = useState("");
+  const [currentChat, setCurrentChat] = useState([]);
 
   //LOOKING FOR ROOM NAME FROM FIREBASE using PARAMS
-  useEffect(() => {
-    get(dbRef, `rooms/`)
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          // Find the correct room name
-          console.log("List of rooms", snapshot.val().rooms.name);
-          if (snapshot.val().rooms.name.indexOf(roomName) !== -1) {
-            setActiveRooms(roomName);
-            console.log(activeRoom);
+  useEffect(
+    () => {
+      get(dbRef, `Chats/${roomName}`)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            // Find the correct room name
+            console.log("All of the chats", snapshot.val().Chats[roomName]);
+            if (snapshot.val().Chats[roomName] !== undefined) {
+              setActiveRooms(roomName);
+              setCurrentChat([snapshot.val().Chats[roomName]]);
+              console.log("Current Chat room", currentChat);
+            } else {
+              setActiveRooms("Chat room not found");
+              setCurrentChat([]);
+            }
           } else {
-            setActiveRooms("Chat room not found");
+            console.log("No data available");
           }
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error("The error is here", error);
-      });
-  }, [roomName]);
+        })
+        .catch((error) => {
+          console.error("The error is here", error);
+        });
+    },
+    [roomName],
+    currentChat
+  );
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
@@ -71,16 +78,17 @@ const ChatRoom = ({ currentUser }) => {
         </div>
       </div>
       <div className="chatBody">
-        <p className="chatMessage">
-          Hello from whatsapp
-          <span className="chatName">Anouar</span>
-          <span className="chatTimestamp">3:52pm</span>
-        </p>
-        <p className="chatMessage chatReciever">
-          Hello from whatsapp
-          <span className="chatName">Anouar</span>
-          <span className="chatTimestamp">3:52pm</span>
-        </p>
+        {currentChat.length > 0
+          ? currentChat[0].map((message, i) => {
+              return (
+                <p key={i} className="chatMessage chatReciever">
+                  {message.message}
+                  <span className="chatName">{message.sender}</span>
+                  <span className="chatTimestamp">{message.timestamp}</span>
+                </p>
+              );
+            })
+          : ""}
       </div>
       <div className="chatFooter">
         <InsertEmoticon />
